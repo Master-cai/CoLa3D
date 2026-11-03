@@ -1,0 +1,13 @@
+.DS_Store
+.claude/
+
+# Keep uncompressed source meshes local; publish only compressed scene files.
+static/scenes/*.glb
+!static/scenes/*_draco.glb
+
+# Local archives and temporary verification outputs.
+/tmp/
+
+# Local asset-preparation reports.
+/compression_report.json
+/thumbnail_report.json

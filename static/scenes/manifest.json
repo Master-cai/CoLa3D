@@ -1,0 +1,82 @@
+{
+  "_comment": "Real-image cases. Draco geometry (14-bit position quantization) and WebP textures (quality 85); no mesh simplification or object merging.",
+  "cases": [
+    {
+      "id": "case01",
+      "label": "Scene 01",
+      "url": "static/scenes/case01_draco.glb",
+      "thumb": "static/scenes/thumbs/case01.webp",
+      "upAxis": "z"
+    },
+    {
+      "id": "case02",
+      "label": "Scene 02",
+      "url": "static/scenes/case02_draco.glb",
+      "thumb": "static/scenes/thumbs/case02.webp",
+      "upAxis": "z"
+    },
+    {
+      "id": "case03",
+      "label": "Scene 03",
+      "url": "static/scenes/case03_draco.glb",
+      "thumb": "static/scenes/thumbs/case03.webp",
+      "upAxis": "z"
+    },
+    {
+      "id": "case04",
+      "label": "Scene 04",
+      "url": "static/scenes/case04_draco.glb",
+      "thumb": "static/scenes/thumbs/case04.webp",
+      "upAxis": "z"
+    },
+    {
+      "id": "case05",
+      "label": "Scene 05",
+      "url": "static/scenes/case05_draco.glb",
+      "thumb": "static/scenes/thumbs/case05.webp",
+      "upAxis": "z"
+    },
+    {
+      "id": "case06",
+      "label": "Scene 06",
+      "url": "static/scenes/case06_draco.glb",
+      "thumb": "static/scenes/thumbs/case06.webp",
+      "upAxis": "z"
+    },
+    {
+      "id": "case07",
+      "label": "Scene 07",
+      "url": "static/scenes/case07_draco.glb",
+      "thumb": "static/scenes/thumbs/case07.webp",
+      "upAxis": "z"
+    },
+    {
+      "id": "case08",
+      "label": "Scene 08",
+      "url": "static/scenes/case08_draco.glb",
+      "thumb": "static/scenes/thumbs/case08.webp",
+      "upAxis": "z"
+    },
+    {
+      "id": "case09",
+      "label": "Scene 09",
+      "url": "static/scenes/case09_draco.glb",
+      "thumb": "static/scenes/thumbs/case09.webp",
+      "upAxis": "z"
+    },
+    {
+      "id": "case10",
+      "label": "Scene 10",
+      "url": "static/scenes/case10_draco.glb",
+      "thumb": "static/scenes/thumbs/case10.webp",
+      "upAxis": "z"
+    },
+    {
+      "id": "case11",
+      "label": "Scene 11",
+      "url": "static/scenes/case11_draco.glb",
+      "thumb": "static/scenes/thumbs/case11.webp",
+      "upAxis": "z"
+    }
+  ]
+}
