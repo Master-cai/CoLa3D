@@ -1,0 +1,72 @@
+{
+  "pipeline_config": "pretrained_ckpts/pipeline.json",
+  "checkpoints": {
+    "free": "cola3d_free_q8.pt",
+    "point": "cola3d_point_q8.pt",
+    "mask": "cola3d_mask_q8.pt",
+    "ss_flow": "ss_flow_q8.pt",
+    "slat_flow": "slat_flow_q8.pt",
+    "geometry_decoder": "geometry_decoder.pt"
+  },
+  "model_configs": {
+    "free": "configs/train/cola3d/free_q8.json",
+    "point": "configs/train/cola3d/point_q8.json",
+    "mask": "configs/train/cola3d/mask_q8.json",
+    "ss_flow": "configs/train/finetune/ss_flow.json"
+  },
+  "settings": {
+    "seed": 42,
+    "resolution": 1024,
+    "ss_coord_resolution": 64,
+    "slat_flow_resolution": "1024",
+    "min_tokens": 3,
+    "assign_threshold": 0.5,
+    "nms_iou_threshold": 0.5,
+    "fragment_min_voxels": 5,
+    "fragment_ratio": 0.05,
+    "min_object_voxels": 20,
+    "containment_threshold": 0.8,
+    "postprocess_mode": "standard",
+    "online_utonia": true,
+    "shape_latent_source": "flow",
+    "skip_raw_decode": true,
+    "skip_unseg_decode": true
+  },
+  "point_settings": {
+    "prompt_point_rebuild_fallback": "dilate",
+    "prompt_point_dilate_max": 2,
+    "prompt_point_align_pred": true,
+    "prompt_point_align_method": "axis_search",
+    "prompt_point_selection": "center",
+    "prompt_point_snap_radius": 2,
+    "moge2_input_max_side": 1024,
+    "moge2_model_name": "Ruicheng/moge-2-vitl-normal"
+  },
+  "datasets": {
+    "instpifu": {
+      "render_idx": 1,
+      "point": {
+        "prompt_point_source": "rebuild"
+      }
+    },
+    "metascenes": {
+      "render_idx": -1,
+      "point": {
+        "prompt_point_source": "rebuild"
+      }
+    },
+    "replica": {
+      "render_idx": -1,
+      "reuse_free_latent": false,
+      "point": {
+        "prompt_point_source": "mask_moge2"
+      }
+    },
+    "scannetpp": {
+      "render_idx": -1,
+      "point": {
+        "prompt_point_source": "mask_moge2"
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "dataset": "replica",
+  "mode": "mask",
+  "geometry_config": "configs/eval/geometry.json",
+  "mesh_variant": "post_standard",
+  "object_matching": "filename",
+  "prompt_match_min_iou": 0.5,
+  "metric_direction": "gt_to_pred",
+  "gt_adapter": "replica",
+  "pred_adapter": "cola3d_replica_mask"
+}

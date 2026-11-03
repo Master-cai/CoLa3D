@@ -1,0 +1,6 @@
+{
+  "model_repo": "mastercai/CoLa3D",
+  "model_revision": "main",
+  "base_repo": "microsoft/TRELLIS.2-4B",
+  "base_revision": "af44b45f2e35a493886929c6d786e563ec68364d"
+}

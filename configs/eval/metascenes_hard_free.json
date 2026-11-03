@@ -1,0 +1,11 @@
+{
+  "dataset": "metascenes_hard",
+  "mode": "free",
+  "geometry_config": "configs/eval/geometry_hard.json",
+  "mesh_variant": "post_standard",
+  "object_matching": "centroid",
+  "prompt_match_min_iou": 0.5,
+  "metric_direction": "bidirectional",
+  "gt_adapter": "metascenes",
+  "pred_adapter": "cola3d_metascenes"
+}

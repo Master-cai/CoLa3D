@@ -1,0 +1,189 @@
+{
+    "models": {
+        "decoder": {
+            "name": "DecomposableVaeDecoder",
+            "args": {
+                "resolution": 1024,
+                "model_channels": [
+                    1024,
+                    512,
+                    256,
+                    128,
+                    64
+                ],
+                "latent_channels": 32,
+                "num_blocks": [
+                    4,
+                    16,
+                    8,
+                    4,
+                    0
+                ],
+                "block_type": [
+                    "SparseConvNeXtBlock3d",
+                    "SparseConvNeXtBlock3d",
+                    "SparseConvNeXtBlock3d",
+                    "SparseConvNeXtBlock3d",
+                    "SparseConvNeXtBlock3d"
+                ],
+                "up_block_type": [
+                    "SparseResBlockC2S3d",
+                    "SparseResBlockC2S3d",
+                    "SparseResBlockC2S3d",
+                    "SparseResBlockC2S3d"
+                ],
+                "block_args": [
+                    {
+                        "use_checkpoint": false
+                    },
+                    {
+                        "use_checkpoint": false
+                    },
+                    {
+                        "use_checkpoint": false
+                    },
+                    {
+                        "use_checkpoint": false
+                    },
+                    {
+                        "use_checkpoint": false
+                    }
+                ],
+                "use_dtype": "bf16",
+                "cola3d_hidden_dim": 768,
+                "cola3d_num_layers": 6,
+                "cola3d_num_heads": 12,
+                "max_parts": 20,
+                "mask_decoder_type": "cosine",
+                "query_init_mode": "positional",
+                "query_source": "prompt_point",
+                "point_feature_source": "latent_utonia",
+                "routing_mode": null,
+                "per_part_mode": "gt_supervised",
+                "mesh_decode_latent": "original",
+                "use_image_ca": false,
+                "img_feature_dim": 1024,
+                "use_coord_pe": false,
+                "coord_pe_resolution": 32,
+                "pe_mode": "rope",
+                "input_mode": "latent_utonia_1024",
+                "utonia_feature_dim": 576
+            }
+        }
+    },
+    "dataset": {
+        "name": "FlexiDualGridMultiObjDataset",
+        "args": {
+            "resolution": 1024,
+            "max_active_voxels": 6000000,
+            "max_num_faces": 1000000,
+            "min_aesthetic_score": null,
+            "max_objects": 20,
+            "min_objects": 2,
+            "image_size": 512,
+            "skip_mesh": true,
+            "skip_per_obj": true,
+            "preload_mode": null,
+            "prompt_query_mode": "point",
+            "random_prompt_order": true,
+            "shape_latent_root": {
+                "InstPIFu_3D_FRONT": "datasets/InstPIFu-3D-FRONT/Train/shape_latents/shape_enc_next_dc_f16c32_fp16_1024",
+                "MIDI_3D_FRONT": "datasets/MIDI-3D-FRONT/Train/shape_latents/shape_enc_next_dc_f16c32_fp16_1024"
+            },
+            "utonia_feats_root": {
+                "InstPIFu_3D_FRONT": "datasets/InstPIFu-3D-FRONT/Train/utonia_feats_lvl4_fullres",
+                "MIDI_3D_FRONT": "datasets/MIDI-3D-FRONT/Train/utonia_feats_lvl4_fullres"
+            },
+            "dataset_repeat": {
+                "InstPIFu_3D_FRONT": 2,
+                "MIDI_3D_FRONT": 2
+            },
+            "render_root": {
+                "InstPIFu_3D_FRONT": "datasets/InstPIFu-3D-FRONT/Train/raw/renders",
+                "MIDI_3D_FRONT": "datasets/MIDI-3D-FRONT/Train/raw/3D-FRONT-RENDER"
+            }
+        }
+    },
+    "trainer": {
+        "name": "CoLa3DTrainer",
+        "args": {
+            "freeze_modules": [
+                "decoder.from_latent",
+                "decoder.blocks",
+                "decoder.output_layer"
+            ],
+            "dataloader_workers": 8,
+            "max_steps": 120000,
+            "batch_size_per_gpu": 16,
+            "batch_split": 2,
+            "optimizer": {
+                "name": "AdamW",
+                "args": {
+                    "lr": 0.0001,
+                    "weight_decay": 0.0
+                }
+            },
+            "lr_scheduler": {
+                "name": "CosineWarmupLRScheduler",
+                "args": {
+                    "warmup_steps": 500,
+                    "min_lr_ratio": 0.01
+                }
+            },
+            "ema_rate": [
+                0.9999
+            ],
+            "mix_precision_mode": "inflat_all",
+            "mix_precision_dtype": "bfloat16",
+            "grad_clip": {
+                "name": "AdaptiveGradClipper",
+                "args": {
+                    "max_norm": 1.0,
+                    "clip_percentile": 95
+                }
+            },
+            "finetune_ckpt": {
+                "decoder": "pretrained_ckpts/ckpts/shape_dec_next_dc_f16c32_fp16.safetensors"
+            },
+            "snapshot_num_samples": 1,
+            "snapshot_batch_size": 1,
+            "snapshot_master_only": true,
+            "snapshot_use_distributed_collectives": false,
+            "i_log": 50,
+            "i_sample": 1000,
+            "i_save": 2000,
+            "lambda_subdiv": 0.1,
+            "lambda_intersected": 0.1,
+            "lambda_vertice": 0.01,
+            "lambda_mask": 1,
+            "lambda_depth": 10,
+            "lambda_normal": 1,
+            "lambda_kl": 1e-06,
+            "lambda_ssim": 0.2,
+            "lambda_lpips": 0.2,
+            "lambda_seg": 1.0,
+            "lambda_seg_ce": 0.5,
+            "lambda_seg_dice": 0.5,
+            "use_diversity_loss": false,
+            "render_resolution": 512,
+            "camera_randomization_config": {
+                "radius_range": [
+                    2,
+                    100
+                ]
+            }
+        }
+    },
+    "data_dir": {
+        "InstPIFu_3D_FRONT": {
+            "base": "datasets/InstPIFu-3D-FRONT/Train",
+            "mesh_dump": "datasets/InstPIFu-3D-FRONT/Train/mesh_dumps",
+            "dual_grid": "datasets/InstPIFu-3D-FRONT/Train/dual_grid_1024"
+        },
+        "MIDI_3D_FRONT": {
+            "base": "datasets/MIDI-3D-FRONT/Train",
+            "mesh_dump": "datasets/MIDI-3D-FRONT/Train/mesh_dumps",
+            "dual_grid": "datasets/MIDI-3D-FRONT/Train/dual_grid_1024"
+        }
+    }
+}
